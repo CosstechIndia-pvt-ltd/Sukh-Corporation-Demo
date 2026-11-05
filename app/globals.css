@@ -1,0 +1,344 @@
+@import "tailwindcss";
+
+/* ------------------------------------------------------------------ */
+/*  Theme tokens. Every component reads these — never raw colours.    */
+/*  --ink-muted ≈ ink mixed 74% into bg, --line ≈ ink at 12%.          */
+/*  Contrast verified: muted ≥ 4.5:1 on bg, surface and accent-2.      */
+/* ------------------------------------------------------------------ */
+:root,
+:root[data-theme="velvet-plum"] {
+  --bg: #faf6f2;
+  --surface: #ffffff;
+  --surface-2: #f4eee9;
+  --ink: #2a1a24;
+  --ink-muted: #60535a;
+  --line: #e1dcd9;
+  --primary: #5b2a4a;
+  --primary-ink: #ffffff;
+  --accent: #ebcfd4;
+  --accent-2: #f1e6e4;
+  --highlight: #b8956a;
+  --success: #2f6b4f;
+  --danger: #a3323b;
+  --scrim: 26 14 22;
+  color-scheme: light;
+}
+
+:root[data-theme="sage-atelier"] {
+  --bg: #f5f4ee;
+  --surface: #ffffff;
+  --surface-2: #ecebe3;
+  --ink: #1f2a24;
+  --ink-muted: #575f59;
+  --line: #dbdcd6;
+  --primary: #2f4a3c;
+  --primary-ink: #ffffff;
+  --accent: #c9d5c3;
+  --accent-2: #e8e2d4;
+  --highlight: #a88b5c;
+  --success: #2f6b4f;
+  --danger: #a3323b;
+  --scrim: 18 28 22;
+  color-scheme: light;
+}
+
+:root[data-theme="dusk-lavender"] {
+  --bg: #f7f5fa;
+  --surface: #ffffff;
+  --surface-2: #eeebf3;
+  --ink: #1b1e33;
+  --ink-muted: #545667;
+  --line: #dddbe2;
+  --primary: #262b52;
+  --primary-ink: #ffffff;
+  --accent: #d8d1ec;
+  --accent-2: #d6e4ef;
+  --highlight: #9c8a6e;
+  --success: #2f6b4f;
+  --danger: #a3323b;
+  --scrim: 16 18 34;
+  color-scheme: light;
+}
+
+:root[data-theme="rose-clay"] {
+  --bg: #fbf5f0;
+  --surface: #ffffff;
+  --surface-2: #f4ebe3;
+  --ink: #2b1714;
+  --ink-muted: #61514d;
+  --line: #e2dad6;
+  --primary: #6e2433;
+  --primary-ink: #ffffff;
+  --accent: #ebc2ae;
+  --accent-2: #ede1d2;
+  --highlight: #b08a5a;
+  --success: #2f6b4f;
+  --danger: #a3323b;
+  --scrim: 30 14 12;
+  color-scheme: light;
+}
+
+:root[data-theme="midnight-velvet"] {
+  --bg: #16111a;
+  --surface: #211a26;
+  --surface-2: #1c1620;
+  --ink: #f2eaf0;
+  --ink-muted: #b9b2b8;
+  --line: #3a3240;
+  --primary: #d8b4c8;
+  --primary-ink: #16111a;
+  --accent: #3a2c3f;
+  --accent-2: #2a2130;
+  --highlight: #c9a877;
+  --success: #8fcfae;
+  --danger: #f0a0a8;
+  --scrim: 6 4 8;
+  color-scheme: dark;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Tailwind mapping                                                   */
+/* ------------------------------------------------------------------ */
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-ink-muted: var(--ink-muted);
+  --color-line: var(--line);
+  --color-primary: var(--primary);
+  --color-primary-ink: var(--primary-ink);
+  --color-accent: var(--accent);
+  --color-accent-2: var(--accent-2);
+  --color-highlight: var(--highlight);
+  /* Text-safe gold: highlight mixed 55% with ink — ≥4.5:1 on bg, surface and accent-2 in every theme */
+  --color-highlight-ink: color-mix(in srgb, var(--highlight) 55%, var(--ink));
+  --color-success: var(--success);
+  --color-danger: var(--danger);
+
+  --font-display: var(--font-fraunces), ui-serif, Georgia, serif;
+  --font-sans: var(--font-manrope), ui-sans-serif, system-ui, sans-serif;
+
+  --radius-chip: 4px;
+  --radius-card: 12px;
+  --radius-media: 24px;
+
+  --shadow-float: 0 24px 60px -24px rgb(var(--scrim) / 0.28), 0 2px 8px -2px rgb(var(--scrim) / 0.08);
+  --shadow-soft: 0 12px 32px -16px rgb(var(--scrim) / 0.22);
+
+  --ease-out-soft: cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* ------------------------------------------------------------------ */
+/*  Base                                                               */
+/* ------------------------------------------------------------------ */
+@layer base {
+  html {
+    background: var(--bg);
+    color: var(--ink);
+    -webkit-text-size-adjust: 100%;
+    text-rendering: optimizeLegibility;
+    -webkit-font-smoothing: antialiased;
+    scroll-padding-top: 96px;
+  }
+  body {
+    background: var(--bg);
+    color: var(--ink);
+    font-family: var(--font-sans);
+    font-size: 15px;
+    line-height: 1.6;
+    overflow-x: clip;
+  }
+  ::selection {
+    background: var(--accent);
+    color: var(--ink);
+  }
+  :focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  h1,
+  h2,
+  h3,
+  h4 {
+    font-family: var(--font-display);
+    font-weight: 350;
+    letter-spacing: -0.02em;
+    line-height: 1.08;
+    text-wrap: balance;
+  }
+  p {
+    text-wrap: pretty;
+  }
+  :where(h1, h2, h3, h4, blockquote, .font-display) :where(em, i) {
+    font-family: var(--font-fraunces-italic), var(--font-display);
+    font-style: italic;
+  }
+  input[type="date"]::-webkit-calendar-picker-indicator {
+    filter: var(--date-filter, none);
+    cursor: pointer;
+  }
+  :root[data-theme="midnight-velvet"] {
+    --date-filter: invert(0.9);
+  }
+}
+
+/* Theme swaps animate for 300ms only while switching */
+html.theme-transition,
+html.theme-transition *,
+html.theme-transition *::before,
+html.theme-transition *::after {
+  transition:
+    background-color 300ms ease-out,
+    color 300ms ease-out,
+    border-color 300ms ease-out,
+    fill 300ms ease-out,
+    stroke 300ms ease-out !important;
+}
+
+/* ------------------------------------------------------------------ */
+/*  Utilities                                                          */
+/* ------------------------------------------------------------------ */
+@utility container-x {
+  width: 100%;
+  max-width: 1320px;
+  margin-inline: auto;
+  padding-inline: 16px;
+  @media (width >= 640px) {
+    padding-inline: 24px;
+  }
+  @media (width >= 1024px) {
+    padding-inline: 40px;
+  }
+}
+
+@utility eyebrow {
+  font-family: var(--font-sans);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  line-height: 1.4;
+}
+
+@utility tabular {
+  font-variant-numeric: tabular-nums lining-nums;
+  font-feature-settings: "tnum" 1, "lnum" 1;
+}
+
+@utility no-scrollbar {
+  scrollbar-width: none;
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+/* Paper grain — very low opacity SVG noise on large sections */
+@utility grain {
+  position: relative;
+  isolation: isolate;
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    opacity: var(--grain-opacity, 0.07);
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 0.2 0 0 0 0 0.15 0 0 0 0 0.18 0 0 0 0.55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)'/></svg>");
+  }
+}
+
+:root[data-theme="midnight-velvet"] {
+  --grain-opacity: 0.12;
+}
+:root[data-theme="midnight-velvet"] .grain::before {
+  mix-blend-mode: screen;
+}
+
+/* Hairline rule with a short metallic tick at the start */
+@utility rule-tick {
+  position: relative;
+  border-top: 1px solid var(--line);
+  &::before {
+    content: "";
+    position: absolute;
+    top: -1px;
+    left: 0;
+    width: 32px;
+    height: 1px;
+    background: var(--highlight);
+  }
+}
+
+/* Skeleton shimmer */
+@keyframes shimmer {
+  0% {
+    background-position: -400px 0;
+  }
+  100% {
+    background-position: 400px 0;
+  }
+}
+@utility skeleton {
+  background: linear-gradient(90deg, var(--surface-2) 0%, var(--accent-2) 50%, var(--surface-2) 100%);
+  background-size: 800px 100%;
+  animation: shimmer 1.4s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* ------------------------------------------------------------------ */
+/*  Overlay motion (Radix data-state driven, exit-aware)               */
+/* ------------------------------------------------------------------ */
+@keyframes fade-in { from { opacity: 0 } to { opacity: 1 } }
+@keyframes fade-out { from { opacity: 1 } to { opacity: 0 } }
+@keyframes rise-in { from { opacity: 0; transform: translateY(12px) scale(0.99) } to { opacity: 1; transform: none } }
+@keyframes rise-out { from { opacity: 1; transform: none } to { opacity: 0; transform: translateY(8px) } }
+@keyframes sheet-up { from { transform: translateY(100%) } to { transform: none } }
+@keyframes sheet-down { from { transform: none } to { transform: translateY(100%) } }
+@keyframes sheet-left { from { transform: translateX(100%) } to { transform: none } }
+@keyframes sheet-right { from { transform: none } to { transform: translateX(100%) } }
+@keyframes pop-in { from { opacity: 0; transform: translateY(6px) scale(0.98) } to { opacity: 1; transform: none } }
+
+@utility anim-overlay {
+  &[data-state="open"] { animation: fade-in 260ms ease-out both; }
+  &[data-state="closed"] { animation: fade-out 200ms ease-in both; }
+}
+@utility anim-dialog {
+  &[data-state="open"] { animation: rise-in 320ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  &[data-state="closed"] { animation: rise-out 180ms ease-in both; }
+}
+@utility anim-sheet-bottom {
+  &[data-state="open"] { animation: sheet-up 360ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  &[data-state="closed"] { animation: sheet-down 240ms ease-in both; }
+}
+@utility anim-sheet-right {
+  &[data-state="open"] { animation: sheet-left 360ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  &[data-state="closed"] { animation: sheet-right 240ms ease-in both; }
+}
+@utility anim-pop {
+  &[data-state="open"] { animation: pop-in 220ms cubic-bezier(0.22, 1, 0.36, 1) both; }
+  &[data-state="closed"] { animation: fade-out 150ms ease-in both; }
+}
+
+/* Fixed dock (detail page mobile action bar) only exists below lg */
+@media (width >= 1024px) {
+  :root {
+    --dock: 0px !important;
+  }
+}
